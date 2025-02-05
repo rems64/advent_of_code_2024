@@ -40,4 +40,39 @@ mod tests {
             .fold(0, |acc, x| acc + x);
         dbg!(result);
     }
+
+    #[test]
+    fn day4_part2() {
+        let source = include_str!("../resources/day4.txt");
+
+        let v = source
+            .lines()
+            .map(|c| c.chars().collect_vec())
+            .collect_vec();
+
+        let n = v.len();
+
+        let result = (1..n - 1)
+            .cartesian_product(1..n - 1)
+            .map(|(i, j)| {
+                if v[i][j] == 'A' {
+                    match (
+                        v[i - 1][j - 1],
+                        v[i + 1][j + 1],
+                        v[i - 1][j + 1],
+                        v[i + 1][j - 1],
+                    ) {
+                        ('M', 'S', 'M', 'S')
+                        | ('M', 'S', 'S', 'M')
+                        | ('S', 'M', 'M', 'S')
+                        | ('S', 'M', 'S', 'M') => 1,
+                        _ => 0,
+                    }
+                } else {
+                    0
+                }
+            })
+            .fold(0, |acc, x| acc + x);
+        dbg!(result);
+    }
 }
