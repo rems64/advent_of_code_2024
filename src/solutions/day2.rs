@@ -5,7 +5,6 @@ mod tests {
     enum Growth {
         Up,
         Down,
-        Still,
     }
 
     #[test]
@@ -25,7 +24,7 @@ mod tests {
                 0 => false,
                 1 => true,
                 _ => {
-                    let mut growth = if report[0] < report[1] {
+                    let growth = if report[0] < report[1] {
                         Growth::Up
                     } else if report[0] > report[1] {
                         Growth::Down
@@ -38,16 +37,6 @@ mod tests {
                         .all(|p| match growth {
                             Growth::Up => (p.0 < p.1) && (p.1 - p.0) <= 3,
                             Growth::Down => (p.0 > p.1) && (p.0 - p.1) <= 3,
-                            Growth::Still => {
-                                growth = if p.0 < p.1 {
-                                    Growth::Up
-                                } else if p.0 > p.1 {
-                                    Growth::Down
-                                } else {
-                                    Growth::Still
-                                };
-                                true
-                            }
                         })
                 }
             })
